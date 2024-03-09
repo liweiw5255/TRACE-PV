@@ -1,0 +1,64 @@
+{
+    "data": [
+        {
+            "key": "Rsh",
+            "value": "393.2054"
+        },
+        {
+            "key": "iter",
+            "value": "1000"
+        },
+        {
+            "key": "DI_factor",
+            "value": "0.94489"
+        },
+        {
+            "key": "IL",
+            "value": "5.9657"
+        },
+        {
+            "key": "I0",
+            "value": "6.3076e-12"
+        },
+        {
+            "key": "Voc",
+            "value": "64.2"
+        },
+        {
+            "key": "Temp_soc",
+            "value": "-0.2727"
+        },
+        {
+            "key": "Rs",
+            "value": "0.37428"
+        },
+        {
+            "key": "Temp_isc",
+            "value": "0.061745"
+        },
+        {
+            "key": "Ncell",
+            "value": "96"
+        },
+        {
+            "key": "Nmodule",
+            "value": "19"
+        },
+        {
+            "key": "Imp",
+            "value": "5.58"
+        },
+        {
+            "key": "Vmp",
+            "value": "54.7"
+        },
+        {
+            "key": "Isc",
+            "value": "5.96"
+        },
+        {
+            "key": "Nstring",
+            "value": "29"
+        }
+    ]
+}

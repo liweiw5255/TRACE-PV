@@ -1,0 +1,68 @@
+[
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/software/openmpi/bin/mpicxx   -g -std=gnu++14 -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_cuda_main.cpp.o -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_cuda_main.cpp",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_cuda_main.cpp",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_cuda_main.cpp.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/software/openmpi/bin/mpicxx   -g -std=gnu++14 -o CMakeFiles/TRACE_PV.dir/src/simulation/utility/a2s_cuda_functions.cpp.o -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/utility/a2s_cuda_functions.cpp",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/utility/a2s_cuda_functions.cpp",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/utility/a2s_cuda_functions.cpp.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_cuda_allocate.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_cuda_allocate.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_cuda_allocate.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_cuda_allocate.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_kernel_a2s.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_kernel_a2s.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_kernel_a2s.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_kernel_a2s.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_kernel_calibration.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_kernel_calibration.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_kernel_calibration.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_kernel_calibration.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/utility/a2s_cuda_device.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/utility/a2s_cuda_device.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/utility/a2s_cuda_device.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/utility/a2s_cuda_device.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_device_svm.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_device_svm.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_device_svm.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_device_svm.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_device_ode.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_device_ode.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_device_ode.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_device_ode.cu.o"
+},
+{
+  "directory": "/home/liweiw/TRACE-PV_official/TRACE-PV/build",
+  "command": "/usr/local/cuda-11.7/bin/nvcc -forward-unknown-to-host-compiler   -G -g -O0 -std=c++14 \"--generate-code=arch=compute_52,code=[compute_52,sm_52]\" -x cu -rdc=true -c /home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_device_state_space.cu -o CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_device_state_space.cu.o",
+  "file": "/home/liweiw/TRACE-PV_official/TRACE-PV/src/simulation/a2s_simulation/a2s_cuda_device_state_space.cu",
+  "output": "CMakeFiles/TRACE_PV.dir/src/simulation/a2s_simulation/a2s_cuda_device_state_space.cu.o"
+}
+]

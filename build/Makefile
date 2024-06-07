@@ -321,6 +321,30 @@ src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TRACE_PV.dir/build.make CMakeFiles/TRACE_PV.dir/src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu.s
 .PHONY : src/simulation/avg_simulation/a2s_cuda_kernel_avg.cu.s
 
+src/simulation/parameter_variation/parameter_variation.o: src/simulation/parameter_variation/parameter_variation.cpp.o
+.PHONY : src/simulation/parameter_variation/parameter_variation.o
+
+# target to build an object file
+src/simulation/parameter_variation/parameter_variation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TRACE_PV.dir/build.make CMakeFiles/TRACE_PV.dir/src/simulation/parameter_variation/parameter_variation.cpp.o
+.PHONY : src/simulation/parameter_variation/parameter_variation.cpp.o
+
+src/simulation/parameter_variation/parameter_variation.i: src/simulation/parameter_variation/parameter_variation.cpp.i
+.PHONY : src/simulation/parameter_variation/parameter_variation.i
+
+# target to preprocess a source file
+src/simulation/parameter_variation/parameter_variation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TRACE_PV.dir/build.make CMakeFiles/TRACE_PV.dir/src/simulation/parameter_variation/parameter_variation.cpp.i
+.PHONY : src/simulation/parameter_variation/parameter_variation.cpp.i
+
+src/simulation/parameter_variation/parameter_variation.s: src/simulation/parameter_variation/parameter_variation.cpp.s
+.PHONY : src/simulation/parameter_variation/parameter_variation.s
+
+# target to generate assembly for a file
+src/simulation/parameter_variation/parameter_variation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TRACE_PV.dir/build.make CMakeFiles/TRACE_PV.dir/src/simulation/parameter_variation/parameter_variation.cpp.s
+.PHONY : src/simulation/parameter_variation/parameter_variation.cpp.s
+
 src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.o: src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.cu.o
 .PHONY : src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.o
 
@@ -426,6 +450,9 @@ help:
 	@echo "... src/simulation/avg_simulation/a2s_cuda_kernel_avg.o"
 	@echo "... src/simulation/avg_simulation/a2s_cuda_kernel_avg.i"
 	@echo "... src/simulation/avg_simulation/a2s_cuda_kernel_avg.s"
+	@echo "... src/simulation/parameter_variation/parameter_variation.o"
+	@echo "... src/simulation/parameter_variation/parameter_variation.i"
+	@echo "... src/simulation/parameter_variation/parameter_variation.s"
 	@echo "... src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.o"
 	@echo "... src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.i"
 	@echo "... src/simulation/thermal_loss_simulation/a2s_cuda_kernel_thermal.s"

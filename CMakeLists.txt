@@ -31,6 +31,7 @@ set(CMAKE_CUDA_FLAGS_DEBUG "-G -g -O0")
 set(CPP_SOURCES
 	${SIMULATION_SRC}/a2s_cuda_main.cpp
 	${UTILITY_SIMULATION_SRC}/a2s_cuda_functions.cpp
+	${PARAMETER_VARIATION_SRC}/parameter_variation.cpp
 )
 
 set(CUDA_SOURCES
@@ -40,11 +41,13 @@ set(CUDA_SOURCES
     ${A2S_SIMULATION_SRC}/a2s_cuda_kernel_a2s.cu
     ${A2S_SIMULATION_SRC}/a2s_cuda_kernel_calibration.cu
     ${THERMAL_LOSS_SIMULATION_SRC}/a2s_cuda_kernel_thermal.cu
+
     # CUDA DEVICE
     ${UTILITY_SIMULATION_SRC}/a2s_cuda_device.cu
     ${A2S_SIMULATION_SRC}/a2s_cuda_device_svm.cu
     ${A2S_SIMULATION_SRC}/a2s_cuda_device_ode.cu
     ${A2S_SIMULATION_SRC}/a2s_cuda_device_state_space.cu
+
 )
 
 # Add the executable target

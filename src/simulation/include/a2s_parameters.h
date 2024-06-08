@@ -12,7 +12,7 @@
 const double switching_frequency = 10e3;
 const double switching_period = 1.0 / switching_frequency;
 const double simulation_time = 266 * switching_period;
-const int simulation_case = 863;
+const int simulation_case = 5e4;
 
 // Average Model Simulation Parameters
 const int Ncell = 96;

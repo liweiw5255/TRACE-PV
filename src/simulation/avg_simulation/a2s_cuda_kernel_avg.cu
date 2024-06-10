@@ -3,7 +3,7 @@
 #include <cuda_runtime.h>
 #include <cublas_v2.h>
 
-__global__ void avgKernel(const double* d_S_rated, double* d_i1_data_avg, double* d_i2_data_avg, double* d_vc_data_avg) {
+__global__ void avgKernel(const double* d_S_rated, const int simulation_case, double* d_i1_data_avg, double* d_i2_data_avg, double* d_vc_data_avg) {
 
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
 

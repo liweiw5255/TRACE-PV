@@ -2,7 +2,7 @@
 #include "../include/a2s_device_function.h"
 #include <cuda_runtime.h>
               
-__global__ void sumKernel(const double* i1_data, const double* i2_data, const double *vc_data, double* i1_mean, double* i2_mean, double* vc_mean) {
+__global__ void sumKernel(const double* i1_data, const double* i2_data, const double *vc_data, const int simulation_case, double* i1_mean, double* i2_mean, double* vc_mean) {
 
     __shared__ double sharedData_i1[BLOCK_SIZE]; 
     __shared__ double sharedData_i2[BLOCK_SIZE]; 
@@ -20,7 +20,7 @@ __global__ void sumKernel(const double* i1_data, const double* i2_data, const do
 
     int global_id = (num_sw * total_num_block * BLOCK_SIZE) + (local_sw_id * DIM + dim_sw_id) * BLOCK_SIZE + DIM * tid + dim_sw_id;
     
-    if(bid < simulation_total_size * num_block){
+    if(bid < simulation_case * simulation_size * num_block){
         // sharedData_i1[tid] = (local_sw_id != num_block - 1 && tid < num_block * BLOCK_SIZE - local_sw_id * BLOCK_SIZE)? i1_data[global_id] : 0.0;
         sharedData_i1[tid] = (local_sw_id == num_block - 1 && tid < duration_size - (num_block - 1) * BLOCK_SIZE)? i1_data[global_id] : 0.0; // ((local_sw_id + 1) * BLOCK_SIZE < duration_size)? i1_data[global_id] : 0.0;
         sharedData_i2[tid] = (local_sw_id == num_block - 1 && tid < duration_size - (num_block - 1) * BLOCK_SIZE)? i2_data[global_id] : 0.0; // ((local_sw_id + 1) * BLOCK_SIZE < duration_size)? i2_data[global_id] : 0.0;

@@ -19,19 +19,28 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set CUDA toolkit path
-set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-11.8)
+#set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-11.8)
+# set(CUDA_TOOLKIT_ROOT_DIR /software/slurm/spackages/linux-rocky8-x86_64/gcc-12.3.0/cuda-11.8.0-in72fn46ydgmi5ak67tvzjll5dz4w43u)
 
 # Find CUDA
-# find_package(CUDA 11.8 REQUIRED)
+find_package(CUDA REQUIRED)
+set(CUDA_VERSION 12.3)
+include_directories("${CUDA_INCLUDE_DIRS}")
 
 # Set the debug flags for CUDA
 set(CMAKE_CUDA_FLAGS_DEBUG "-G -g -O0")
 
+# Find MPI
+find_package(MPI REQUIRED)
+include_directories(${MPI_INCLUDE_PATH})
+
 # Add source files
 set(CPP_SOURCES
-	${SIMULATION_SRC}/a2s_cuda_main.cpp
-	${UTILITY_SIMULATION_SRC}/a2s_cuda_functions.cpp
-	${PARAMETER_VARIATION_SRC}/parameter_variation.cpp
+    ${SIMULATION_SRC}/a2s_cuda_main.cpp
+    ${UTILITY_SIMULATION_SRC}/a2s_cluster_merging.cpp
+    ${UTILITY_SIMULATION_SRC}/functions.cpp
+    ${PARAMETER_VARIATION_SRC}/parameter_variation.cpp
+
 )
 
 set(CUDA_SOURCES
@@ -47,7 +56,6 @@ set(CUDA_SOURCES
     ${A2S_SIMULATION_SRC}/a2s_cuda_device_svm.cu
     ${A2S_SIMULATION_SRC}/a2s_cuda_device_ode.cu
     ${A2S_SIMULATION_SRC}/a2s_cuda_device_state_space.cu
-
 )
 
 # Add the executable target
@@ -62,8 +70,5 @@ set_target_properties(TRACE_PV PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 # Ensure that the --dc flag is used for device code compilation
 set_source_files_properties(${CUDA_SOURCES} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
-# Force CMake to use shared libraries
-set(CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES /usr/lib/x86_64-linux-gnu)
-
-# Link CUDA libraries and force linking with shared versions of system libraries
-target_link_libraries(TRACE_PV ${CUDA_LIBRARIES} -lcudadevrt -lcudart_static -lrt -lpthread -ldl)
+# Link CUDA and MPI libraries
+target_link_libraries(TRACE_PV ${CUDA_LIBRARIES} ${MPI_LIBRARIES})

@@ -1,0 +1,1 @@
+/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/bin/g++ CMakeFiles/MATLAB_MPI.dir/main.cpp.o -o MATLAB_MPI   -L/software/commercial/matlab/R2023b/bin/matlab/bin  -Wl,-rpath,/software/commercial/matlab/R2023b/bin/matlab/bin -lMatlabDataArray 

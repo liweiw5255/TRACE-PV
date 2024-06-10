@@ -1,0 +1,1 @@
+mpic++ CMakeFiles/MPI_MATLAB.dir/main.cpp.o CMakeFiles/MPI_MATLAB.dir/simulation.cpp.o CMakeFiles/MPI_MATLAB.dir/clusterMerging.cpp.o -o MPI_MATLAB  -Wl,-rpath,/software/commercial/matlab/R2023b/extern/bin/glnxa64 -I/software/commercial/matlab/R2023b/extern/include -L/software/commercial/matlab/R2023b/extern/bin/glnxa64 -lMatlabDataArray -lMatlabEngine 

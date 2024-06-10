@@ -8,11 +8,15 @@
 #define abs_tol 1e-7
 #define rel_tol 1e-3
 #define BLOCK_SIZE 512
+#define MP_sz 3
+
 
 const double switching_frequency = 10e3;
 const double switching_period = 1.0 / switching_frequency;
 const double simulation_time = 266 * switching_period;
-const int simulation_case = 5e4;
+// const size_t simulation_case = 6e4;
+const size_t batchSize = 5e3;
+const double threshold[MP_sz]{0.1};
 
 // Average Model Simulation Parameters
 const int Ncell = 96;
@@ -49,7 +53,7 @@ const int avg_size = 5e5;
 const double step_size = 1e-7;
 const int simulation_size = int(simulation_time / switching_period);
 const int duration_size = int(switching_period / step_size);
-const int simulation_total_size = simulation_case * simulation_size;
+// const int simulation_total_size = simulation_case * simulation_size;
 
 // Define DC-link voltage. Can put in loop later if it varies with time.
 const int Vdc = 1000;

@@ -1,0 +1,72 @@
+vector size: 3
+set size: 1
+Start Simulation No.0
+Initialiation Time: 5
+Warning: The promoted parameter 'DC voltage/Value' specified in the mask parameter 'Udc_ref' could not be resolved for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'
+> In load_system>i_load_system (line 44)
+In load_system (line 20)
+Warning: Failed to resolve any promoted parameters specified in the mask parameter 'Udc_ref' for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'. This parameter will default to edit parameter
+> In load_system>i_load_system (line 44)
+In load_system (line 20)
+Warning: The promoted parameter 'PWM Generator
+(Three-phase, Two-level)/fsw' specified in the mask parameter 'fsw' could not be resolved for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'
+> In load_system>i_load_system (line 44)
+In load_system (line 20)
+Warning: Failed to resolve any promoted parameters specified in the mask parameter 'fsw' for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'. This parameter will default to edit parameter
+> In load_system>i_load_system (line 44)
+In load_system (line 20)
+Loading Model Time: 35
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+Warning: The promoted parameter 'DC voltage/Value' specified in the mask parameter 'Udc_ref' could not be resolved for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'
+Warning: Failed to resolve any promoted parameters specified in the mask parameter 'Udc_ref' for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'. This parameter will default to edit parameter
+Warning: The promoted parameter 'PWM Generator
+(Three-phase, Two-level)/fsw' specified in the mask parameter 'fsw' could not be resolved for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'
+Warning: Failed to resolve any promoted parameters specified in the mask parameter 'fsw' for the block 'AverageModel_Attempt_3_ConstV_CC/Current controller'. This parameter will default to edit parameter
+Warning: Block diagram 'AverageModel_Attempt_3_ConstV_CC' contains 1 algebraic loop(s). To see more details about the loops use the command <a href="matlab:Simulink.BlockDiagram.getAlgebraicLoops(bdroot);">Simulink.BlockDiagram.getAlgebraicLoops('AverageModel_Attempt_3_ConstV_CC') </a> or the command line Simulink debugger by typing <a href="matlab:sldebug(bdroot);">sldebug('AverageModel_Attempt_3_ConstV_CC') </a> in the MATLAB command window. To eliminate this message, set Algebraic loop to "none".
+Found algebraic loop containing: 
+AverageModel_Attempt_3_ConstV_CC/Current controller/dq0 to abc/dq0 to Alpha-Beta-Zero/Subsystem - pi//2 delay
+AverageModel_Attempt_3_ConstV_CC/Current controller/Sum3 (algebraic variable)
+AverageModel_Attempt_3_ConstV_CC/Current controller/Discrete PID Controller1/Parallel P Gain/Internal Parameters/Proportional Gain
+AverageModel_Attempt_3_ConstV_CC/Current controller/Discrete PID Controller1/Sum/Sum_PI/Sum
+AverageModel_Attempt_3_ConstV_CC/Current controller/Gain4
+AverageModel_Attempt_3_ConstV_CC/Current controller/Gain
+AverageModel_Attempt_3_ConstV_CC/Current controller/L
+AverageModel_Attempt_3_ConstV_CC/Current controller/Sum4 (algebraic variable)
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq0/Alpha-Beta-Zero to dq0/Subsystem1
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq0/Alpha-Beta-Zero to dq0/Subsystem - pi//2 delay
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq0/Alpha-Beta-Zero to dq0/Switch (discontinuity)
+AverageModel_Attempt_3_ConstV_CC/Current controller/Sum6 (algebraic variable)
+AverageModel_Attempt_3_ConstV_CC/Current controller/Gain1
+AverageModel_Attempt_3_ConstV_CC/Current controller/L1
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq1/Alpha-Beta-Zero to dq0/Subsystem - pi//2 delay
+AverageModel_Attempt_3_ConstV_CC/Current controller/dq0 to abc/dq0 to Alpha-Beta-Zero/Subsystem1
+AverageModel_Attempt_3_ConstV_CC/Current controller/dq0 to abc/dq0 to Alpha-Beta-Zero/Switch (discontinuity)
+AverageModel_Attempt_3_ConstV_CC/Current controller/dq0 to abc/Alpha-Beta-Zero to abc/Gain3
+AverageModel_Attempt_3_ConstV_CC/Current controller/dq0 to abc/Alpha-Beta-Zero to abc/Gain3
+AverageModel_Attempt_3_ConstV_CC/Current controller/Gain2
+AverageModel_Attempt_3_ConstV_CC/powergui/EquivalentModel1/State-Space
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Model/I C:/do not delete this gain
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Model/I B:/do not delete this gain
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Model/I A:/do not delete this gain
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Kv
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq1/abc to Alpha-Beta-Zero/Gain3
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq1/abc to Alpha-Beta-Zero/Gain1 (algebraic variable)
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq1/Alpha-Beta-Zero to dq0/Subsystem1
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq1/Alpha-Beta-Zero to dq0/Switch (algebraic variable) (discontinuity)
+AverageModel_Attempt_3_ConstV_CC/Current controller/Sum (algebraic variable)
+AverageModel_Attempt_3_ConstV_CC/Current controller/Discrete PID Controller/Parallel P Gain/Internal Parameters/Proportional Gain
+AverageModel_Attempt_3_ConstV_CC/Current controller/Discrete PID Controller/Sum/Sum_PI/Sum
+AverageModel_Attempt_3_ConstV_CC/Current controller/Gain3
+AverageModel_Attempt_3_ConstV_CC/Current controller/Sum1
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Model/U C:/do not delete this gain
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Model/U B:/do not delete this gain
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Model/U A:/do not delete this gain
+AverageModel_Attempt_3_ConstV_CC/Three-Phase V-I Measurement1/Kv1
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq0/abc to Alpha-Beta-Zero/Gain3
+AverageModel_Attempt_3_ConstV_CC/Measurements/abc to dq0/abc to Alpha-Beta-Zero/Gain1 (algebraic variable)
+AverageModel_Attempt_3_ConstV_CC/Current controller/Sum7 (algebraic variable)
+This algebraic loop may be resolved when the subsystem option 'Minimize algebraic loop occurrences' is selected on some or all of the atomic and enabled subsystems in this algebraic loop
+Warning: Discontinuities detected within algebraic loop(s), may have trouble solving

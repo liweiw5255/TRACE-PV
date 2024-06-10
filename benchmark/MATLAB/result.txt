@@ -1,0 +1,470 @@
+mpirun -np 1 main
+49
+vector size: 3
+set size: 3
+Start Simulation No.0
+Initialiation Time: 14
+Loading Model Time: 50
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.0 Finished
+vector size: 6
+set size: 5
+Start Simulation No.1
+Initialiation Time: 6
+Loading Model Time: 57
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.1 Finished
+vector size: 9
+set size: 6
+Start Simulation No.2
+Initialiation Time: 7
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 28
+Simulation No.2 Finished
+vector size: 12
+set size: 6
+Start Simulation No.3
+Initialiation Time: 7
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.3 Finished
+vector size: 15
+set size: 7
+Start Simulation No.4
+Initialiation Time: 10
+Loading Model Time: 51
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 28
+Simulation No.4 Finished
+vector size: 18
+set size: 8
+Start Simulation No.5
+Initialiation Time: 7
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.5 Finished
+vector size: 21
+set size: 8
+Start Simulation No.6
+Initialiation Time: 10
+Loading Model Time: 52
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.6 Finished
+vector size: 24
+set size: 9
+Start Simulation No.7
+Initialiation Time: 9
+Loading Model Time: 52
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.7 Finished
+vector size: 27
+set size: 9
+Start Simulation No.8
+Initialiation Time: 6
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.8 Finished
+vector size: 30
+set size: 10
+Start Simulation No.9
+Initialiation Time: 6
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.9 Finished
+vector size: 33
+set size: 12
+Start Simulation No.10
+Initialiation Time: 6
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.10 Finished
+vector size: 36
+set size: 14
+Start Simulation No.11
+Initialiation Time: 7
+Loading Model Time: 56
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.11 Finished
+vector size: 39
+set size: 15
+Start Simulation No.12
+Initialiation Time: 6
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.12 Finished
+vector size: 42
+set size: 17
+Start Simulation No.13
+Initialiation Time: 9
+Loading Model Time: 51
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.13 Finished
+vector size: 45
+set size: 17
+Start Simulation No.14
+Initialiation Time: 7
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.14 Finished
+vector size: 48
+set size: 18
+Start Simulation No.15
+Initialiation Time: 6
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.15 Finished
+vector size: 51
+set size: 20
+Start Simulation No.16
+Initialiation Time: 10
+Loading Model Time: 52
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.16 Finished
+vector size: 54
+set size: 20
+Start Simulation No.17
+Initialiation Time: 10
+Loading Model Time: 52
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.17 Finished
+vector size: 57
+set size: 22
+Start Simulation No.18
+Initialiation Time: 7
+Loading Model Time: 53
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.18 Finished
+vector size: 60
+set size: 22
+Start Simulation No.19
+Initialiation Time: 6
+Loading Model Time: 56
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.19 Finished
+vector size: 63
+set size: 22
+Start Simulation No.20
+Initialiation Time: 7
+Loading Model Time: 56
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.20 Finished
+vector size: 66
+set size: 24
+Start Simulation No.21
+Initialiation Time: 7
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.21 Finished
+vector size: 69
+set size: 24
+Start Simulation No.22
+Initialiation Time: 9
+Loading Model Time: 51
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.22 Finished
+vector size: 72
+set size: 25
+Start Simulation No.23
+Initialiation Time: 7
+Loading Model Time: 56
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.23 Finished
+vector size: 75
+set size: 26
+Start Simulation No.24
+Initialiation Time: 6
+Loading Model Time: 53
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.24 Finished
+vector size: 78
+set size: 26
+Start Simulation No.25
+Initialiation Time: 10
+Loading Model Time: 54
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.25 Finished
+vector size: 81
+set size: 26
+Start Simulation No.26
+Initialiation Time: 7
+Loading Model Time: 56
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0
+i_load: -1.62884
+v_load: 1133.07
+T: 25
+Vc_abc: 349.815
+Vpcc_abc: 348.115
+Vgrid_abc: 0
+Data Transfer Time: 29
+Simulation No.26 Finished
+vector size: 84
+set size: 27
+Start Simulation No.27
+Initialiation Time: 6
+Loading Model Time: 9
+Running simulation... 
+Simulation complete
+
+Simulation Time: 0

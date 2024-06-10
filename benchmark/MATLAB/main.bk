@@ -1,0 +1,133 @@
+#include "simulation.h"
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <unordered_map>
+#include <random>
+#include <ctime>
+#include <cstring>
+#include <mpi.h>
+
+using namespace std;
+
+vector<vector<double>> readCsv(const string& filename, int rank, int size) {
+    vector<vector<double>> MP_Input(1, vector<double>(MP_sz));
+    ifstream fin(filename);
+
+    if (!fin) {
+        cout << "Wrong filename!" << endl;
+        exit(-1);
+    }
+
+    string line;
+    getline(fin, line); // Skip header line
+    while (getline(fin, line)) {
+        vector<double> row;
+        istringstream lineStream(line);
+        string number;
+        while (getline(lineStream, number, ',')) {
+            row.push_back(stod(number));
+        }
+        MP_Input.push_back(row);
+    }
+    return MP_Input;
+}
+
+void MonteCarlo(const vector<vector<double>>& input_parameters, vector<vector<double>>& random_parameters) {
+    default_random_engine generator;
+    generator.seed(100);
+
+    for (int i = 0; i < 4; ++i) {
+        double upper_bound = input_parameters[i][0] + input_parameters[i][1];
+        double lower_bound = input_parameters[i][0] - input_parameters[i][1];
+        normal_distribution<double> distribution(input_parameters[i][0], input_parameters[i][1] / 2);
+
+        for (int j = 0; j < M; ++j) {
+            double number = distribution(generator);
+            while (number > upper_bound || number < lower_bound) {
+                number = distribution(generator);
+            }
+            random_parameters[j][i] = number;
+        }
+    }
+}
+
+int main(int argc, char** argv) {
+    MPI_Init(&argc, &argv);
+
+    int world_size, world_rank, name_len;
+    char processor_name[MPI_MAX_PROCESSOR_NAME];
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+    MPI_Get_processor_name(processor_name, &name_len);
+
+    time_t start, end;
+
+    vector<vector<double>> input_parameters(N_Input, vector<double>(2));
+    vector<vector<double>> random_parameters(M, vector<double>(N_Input));
+    vector<vector<double>> MP_Input(1, vector<double>(MP_sz));
+
+    double threshold = 0.05;
+    double parameter_list[N_Input] = {0.012, 0.012, 0.000250, 0.005};
+
+    for (int i = 0; i < N_Input; ++i) {
+        input_parameters[i][0] = parameter_list[i];
+        input_parameters[i][1] = input_parameters[i][0] * threshold;
+    }
+
+    MonteCarlo(input_parameters, random_parameters);
+
+    string filename = "../../mission_profile/ottare_pv_farm_mission_profile_5min.csv";
+    MP_Input = readCsv(filename, world_rank, world_size);
+
+    size_t sz = MP_Input.size();
+    unordered_map<size_t, vector<size_t>> hash_list = clusterMerging(MP_Input, sz);
+
+    if (world_rank == 0)
+        cout << "In total: " << hash_list.size() << " cases" << endl;
+
+    vector<size_t> key_list;
+    for (const auto& iter : hash_list) {
+        key_list.push_back(iter.first);
+    }
+
+    double* rst = (double*)malloc(N_Output * sizeof(double));
+    double* result_all = (double*)malloc(hash_list.size() * N_Output * sizeof(double));
+    double* dictionary = (double*)malloc(N_Output * sz * sizeof(double));
+
+    if (world_rank == 0) {
+        time(&start);
+    }
+
+    size_t range = (hash_list.size() <= world_size) ? (world_rank < hash_list.size() ? 1 : 0) : (hash_list.size() + world_size - 1) / world_size;
+    double* result = (double*)malloc(range * N_Output * sizeof(double));
+
+    for (int i = world_rank * range; i < (world_rank + 1) * range; ++i) {
+        if (i >= hash_list.size())
+            continue;
+
+        size_t current_key = key_list[i];
+        vector<double> vec = MP_Input[hash_list[current_key][0]];
+        vector<double> tmp = {vec[4], vec[7], vec[8]};
+
+        runSimulation(tmp, i);
+    }
+
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    if (world_rank == 0) {
+        time(&end);
+        double elapsed_time = difftime(end, start);
+        printf("Elapsed time is %.5lf seconds.\n", elapsed_time);
+    }
+
+    free(rst);
+    free(result);
+    free(result_all);
+    free(dictionary);
+
+    MPI_Finalize();
+
+    return 0;
+}

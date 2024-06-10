@@ -3,7 +3,7 @@
 #include <cuda_runtime.h>
 #include <cublas_v2.h>
 
-__global__ void a2sKernel(const double *d_i1_data_avg, const double *d_i2_data_avg, const double *d_vc_data_avg, double *d_i1_data_a2s, double *d_i2_data_a2s, double *d_vc_data_a2s) {
+__global__ void a2sKernel(const double *d_i1_data_avg, const double *d_i2_data_avg, const double *d_vc_data_avg, const int simulation_case, double *d_i1_data_a2s, double *d_i2_data_a2s, double *d_vc_data_a2s) {
 
     int tid = threadIdx.x + blockIdx.x * blockDim.x;
     int case_idx = tid / simulation_size; // Current Case No.
@@ -16,7 +16,7 @@ __global__ void a2sKernel(const double *d_i1_data_avg, const double *d_i2_data_a
     int current_duration_size, current_loop_size;
     
     
-    if(tid < simulation_total_size){
+    if(tid < simulation_size * simulation_case){
     // if(time_to_idx < simulation_total_size){   
         
         // Calculate current time

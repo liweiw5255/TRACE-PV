@@ -1,0 +1,116 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "NVIDIA",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include/c++/12.3.0",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include/c++/12.3.0/x86_64-pc-linux-gnu",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include/c++/12.3.0/backward",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc/x86_64-pc-linux-gnu/12.3.0/include",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc/x86_64-pc-linux-gnu/12.3.0/include-fixed",
+						"/usr/local/include",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include",
+						"/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.3.0/cuda-12.3.0-p2hoh7xwcu52zilqglv3nnc5bwnritue/targets/x86_64-linux/lib/stubs",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.3.0/cuda-12.3.0-p2hoh7xwcu52zilqglv3nnc5bwnritue/targets/x86_64-linux/lib",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc/x86_64-pc-linux-gnu/12.3.0",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib64",
+						"/lib64",
+						"/usr/lib64",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.3.0/cuda-12.3.0-p2hoh7xwcu52zilqglv3nnc5bwnritue/bin/nvcc",
+				"version" : "12.3.52"
+			},
+			"language" : "CUDA",
+			"sourceFileExtensions" : 
+			[
+				"cu"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include/c++/12.3.0",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include/c++/12.3.0/x86_64-pc-linux-gnu",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include/c++/12.3.0/backward",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc/x86_64-pc-linux-gnu/12.3.0/include",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc/x86_64-pc-linux-gnu/12.3.0/include-fixed",
+						"/usr/local/include",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/include",
+						"/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc/x86_64-pc-linux-gnu/12.3.0",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib/gcc",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib64",
+						"/lib64",
+						"/usr/lib64",
+						"/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/software/slurm/spackages/linux-rocky8-x86_64/gcc-12.2.0/gcc-12.3.0-gte3dhuw5dryttvxvjbbxdqxuz2panwt/bin/g++",
+				"version" : "12.3.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"m",
+				"mm",
+				"mpp",
+				"CPP"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

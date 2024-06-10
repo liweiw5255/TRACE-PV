@@ -21,160 +21,163 @@
     }
 
 // Kernel launcher function
-void launchKernel(double const* S_rated, double* thermal_loss) {
-    int numGPUs = 0;
-    CUDA_CHECK(cudaGetDeviceCount(&numGPUs));
+void launchKernel(const double* S_rated, const int local_simulation_case, const int offset, double* thermal_loss, MPI_Comm comm) {
 
-    size_t index = 0;
-    size_t singleCaseSize = 6 * simulation_size * duration_size * DIM + 6 * simulation_size * DIM + 2 * simulation_case * DIM;
-    size_t freeMem[numGPUs], totalMem[numGPUs], requestedSize[numGPUs], local_simulation_case_num[numGPUs], dataSize[numGPUs], dataMeanSize[numGPUs];
-    size_t num_blocks_avg[numGPUs], num_blocks_a2s[numGPUs], num_blocks_mean[numGPUs], num_blocks_adjust[numGPUs], num_blocks_thermal[numGPUs];
+    int i, size;
+    MPI_Comm_rank(comm, &i);
+    MPI_Comm_size(comm, &size);
+
+    // CUDA_CHECK(cudaGetDeviceCount(&numGPUs));
+
+    int index = 0, local_simulation_case_num;
+    size_t singleCaseSize = 6 * simulation_size * duration_size * DIM + 6 * simulation_size * DIM + 2 * batchSize * DIM;
+    size_t freeMem, totalMem, requestedSize, dataSize, dataMeanSize;
+    size_t num_blocks_avg, num_blocks_a2s, num_blocks_mean, num_blocks_adjust, num_blocks_thermal;
 
     // Arrays to hold device pointers for each GPU
-    double *d_i1_data_avg[numGPUs], *d_i2_data_avg[numGPUs], *d_vc_data_avg[numGPUs];
-    double *d_i1_data_a2s[numGPUs], *d_i2_data_a2s[numGPUs], *d_vc_data_a2s[numGPUs];
-    double *d_i1_mean_a2s[numGPUs], *d_i2_mean_a2s[numGPUs], *d_vc_mean_a2s[numGPUs];
-    double *d_i1_mean_avg[numGPUs], *d_i2_mean_avg[numGPUs], *d_vc_mean_avg[numGPUs];
-    double *d_S_rated[numGPUs];
-    double *d_thermal_loss[numGPUs];
+    double *d_i1_data_avg, *d_i2_data_avg, *d_vc_data_avg;
+    double *d_i1_data_a2s, *d_i2_data_a2s, *d_vc_data_a2s;
+    double *d_i1_mean_a2s, *d_i2_mean_a2s, *d_vc_mean_a2s;
+    double *d_i1_mean_avg, *d_i2_mean_avg, *d_vc_mean_avg;
+    double *d_S_rated;
+    double *d_thermal_loss;
 
     // Declare events and streams for timing and synchronization
-    cudaEvent_t startEvent[numGPUs], stopEvent[numGPUs][6];
-    float times[numGPUs][6];
-    cudaStream_t streams[numGPUs][2];
+    cudaEvent_t startEvent, stopEvent[6];
+    double times[6];
+    cudaStream_t streams[2];
 
-    while (index < simulation_case) {
-        for (int i = 0; i < numGPUs; ++i) {
-            CUDA_CHECK(cudaSetDevice(i));
+    // Set No. i GPU as the current device
+    CUDA_CHECK(cudaSetDevice(i));
 
-            CUDA_CHECK(cudaMemGetInfo(&freeMem[i], &totalMem[i]));
+    CUDA_CHECK(cudaMemGetInfo(&freeMem, &totalMem));
 
-            local_simulation_case_num[i] = freeMem[i] / singleCaseSize / sizeof(double);        
-            local_simulation_case_num[i] = (i == numGPUs - 1) ? std::min(local_simulation_case_num[i], simulation_case - index) : local_simulation_case_num[i];
+    local_simulation_case_num = freeMem / singleCaseSize / sizeof(double);        
+    local_simulation_case_num = std::min(local_simulation_case_num, local_simulation_case - index);
 
-            dataSize[i] = local_simulation_case_num[i] * simulation_size * duration_size * DIM;
-            dataMeanSize[i] = local_simulation_case_num[i] * simulation_size * DIM;
-            requestedSize[i] = local_simulation_case_num[i] * singleCaseSize * sizeof(double);
+    dataSize = local_simulation_case_num * simulation_size * duration_size * DIM;
+    dataMeanSize = local_simulation_case_num * simulation_size * DIM;
+    requestedSize = local_simulation_case_num * singleCaseSize * sizeof(double);
 
-            std::cout << "GPU " << i << " Requested Memory: " << double(requestedSize[i]) / (1024 * 1024 * 1024) << " GB, Free Memory: " << double(freeMem[i]) / (1024 * 1024 * 1024) << " GB " << index << std::endl;
-            
-            // Determine the number of blocks needed for different kernels
-            num_blocks_avg[i] = (local_simulation_case_num[i] + BLOCK_SIZE - 1) / BLOCK_SIZE;
-            num_blocks_a2s[i] = (dataSize[i] + BLOCK_SIZE - 1) / BLOCK_SIZE;
-            num_blocks_mean[i] = (dataMeanSize[i] + BLOCK_SIZE - 1) / BLOCK_SIZE;
-            num_blocks_adjust[i] = (dataSize[i] + BLOCK_SIZE - 1) / BLOCK_SIZE;
-            num_blocks_thermal[i] = (local_simulation_case_num[i] + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    // std::cout << "GPU " << i << " Requested Memory: " << double(requestedSize) / (1024 * 1024 * 1024) << " GB, Free Memory: " << double(freeMem) / (1024 * 1024 * 1024) << " GB" << std::endl;
+    
+    // Determine the number of blocks needed for different kernels
+    num_blocks_avg = (local_simulation_case_num + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    num_blocks_a2s = (dataSize + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    num_blocks_mean = (dataMeanSize + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    num_blocks_adjust = (dataSize + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    num_blocks_thermal = (local_simulation_case_num + BLOCK_SIZE - 1) / BLOCK_SIZE;
 
-            // Allocate memory for average model data
-            CUDA_CHECK(cudaMalloc(&d_i1_data_avg[i], sizeof(double) * dataSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_i2_data_avg[i], sizeof(double) * dataSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_vc_data_avg[i], sizeof(double) * dataSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_i1_mean_avg[i], sizeof(double) * dataMeanSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_i2_mean_avg[i], sizeof(double) * dataMeanSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_vc_mean_avg[i], sizeof(double) * dataMeanSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_thermal_loss[i], sizeof(double) * local_simulation_case_num[i]));
-            CUDA_CHECK(cudaMalloc(&d_S_rated[i], sizeof(double) * local_simulation_case_num[i]));
-       
-            // Allocate memory for A2S model data
-            CUDA_CHECK(cudaMalloc(&d_i1_data_a2s[i], sizeof(double) * dataSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_i2_data_a2s[i], sizeof(double) * dataSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_vc_data_a2s[i], sizeof(double) * dataSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_i1_mean_a2s[i], sizeof(double) * dataMeanSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_i2_mean_a2s[i], sizeof(double) * dataMeanSize[i]));
-            CUDA_CHECK(cudaMalloc(&d_vc_mean_a2s[i], sizeof(double) * dataMeanSize[i]));
-            
-            CUDA_CHECK(cudaStreamCreate(&streams[i][0]));
-            CUDA_CHECK(cudaStreamCreate(&streams[i][1]));
-            CUDA_CHECK(cudaEventCreate(&startEvent[i]));
+    // Allocate memory for average model data
+    CUDA_CHECK(cudaMalloc(&d_i1_data_avg, sizeof(double) * dataSize));
+    CUDA_CHECK(cudaMalloc(&d_i2_data_avg, sizeof(double) * dataSize));
+    CUDA_CHECK(cudaMalloc(&d_vc_data_avg, sizeof(double) * dataSize));
+    CUDA_CHECK(cudaMalloc(&d_i1_mean_avg, sizeof(double) * dataMeanSize));
+    CUDA_CHECK(cudaMalloc(&d_i2_mean_avg, sizeof(double) * dataMeanSize));
+    CUDA_CHECK(cudaMalloc(&d_vc_mean_avg, sizeof(double) * dataMeanSize));
+    CUDA_CHECK(cudaMalloc(&d_thermal_loss, sizeof(double) * local_simulation_case_num));
+    CUDA_CHECK(cudaMalloc(&d_S_rated, sizeof(double) * local_simulation_case_num));
 
-             std::cout << "Copying No." << index  << " cases to GPU " << i << std::endl;
-            CUDA_CHECK(cudaMemcpyAsync(d_S_rated[i], S_rated + index, sizeof(double) * local_simulation_case_num[i], cudaMemcpyHostToDevice, streams[i][0]));
-            for (int j = 0; j < 6; ++j) {
-                CUDA_CHECK(cudaEventCreate(&stopEvent[i][j]));
-            }
+    // Allocate memory for A2S model data
+    CUDA_CHECK(cudaMalloc(&d_i1_data_a2s, sizeof(double) * dataSize));
+    CUDA_CHECK(cudaMalloc(&d_i2_data_a2s, sizeof(double) * dataSize));
+    CUDA_CHECK(cudaMalloc(&d_vc_data_a2s, sizeof(double) * dataSize));
+    CUDA_CHECK(cudaMalloc(&d_i1_mean_a2s, sizeof(double) * dataMeanSize));
+    CUDA_CHECK(cudaMalloc(&d_i2_mean_a2s, sizeof(double) * dataMeanSize));
+    CUDA_CHECK(cudaMalloc(&d_vc_mean_a2s, sizeof(double) * dataMeanSize));
+    
+    CUDA_CHECK(cudaStreamCreate(&streams[0]));
+    CUDA_CHECK(cudaStreamCreate(&streams[1]));
+    CUDA_CHECK(cudaEventCreate(&startEvent));
 
-            // Record the start event
-            CUDA_CHECK(cudaEventRecord(startEvent[i], streams[i][0]));
-
-            // Launch the avgKernel
-            avgKernel<<<num_blocks_avg[i], BLOCK_SIZE, 0, streams[i][0]>>>(d_S_rated[i], d_i1_data_avg[i], d_i2_data_avg[i], d_vc_data_avg[i]);
-            CUDA_CHECK(cudaEventRecord(stopEvent[i][0], streams[i][0]));
-            // CUDA_CHECK(cudaStreamSynchronize(streams[i][0])); // Ensure the kernel has finished
-
-            // Launch the sumKernel for average model
-            sumKernel<<<num_blocks_mean[i], BLOCK_SIZE, 0, streams[i][1]>>>(d_i1_data_avg[i], d_i2_data_avg[i], d_vc_data_avg[i], d_i1_mean_avg[i], d_i2_mean_avg[i], d_vc_mean_avg[i]);
-            CUDA_CHECK(cudaEventRecord(stopEvent[i][1], streams[i][1]));
-            // CUDA_CHECK(cudaStreamSynchronize(streams[i][1])); // Ensure the kernel has finished
-
-            // Launch the a2sKernel
-            a2sKernel<<<num_blocks_a2s[i], BLOCK_SIZE, 0, streams[i][0]>>>(d_i1_data_avg[i], d_i2_data_avg[i], d_vc_data_avg[i], d_i1_data_a2s[i], d_i2_data_a2s[i], d_vc_data_a2s[i]);
-            CUDA_CHECK(cudaEventRecord(stopEvent[i][2], streams[i][0]));
-            // CUDA_CHECK(cudaStreamSynchronize(streams[i][0])); // Ensure the kernel has finished
-
-            // Launch the sumKernel for A2S model
-            sumKernel<<<num_blocks_mean[i], BLOCK_SIZE, 0, streams[i][1]>>>(d_i1_data_a2s[i], d_i2_data_a2s[i], d_vc_data_a2s[i], d_i1_mean_a2s[i], d_i2_mean_a2s[i], d_vc_mean_a2s[i]);
-            CUDA_CHECK(cudaEventRecord(stopEvent[i][3], streams[i][1]));
-            // CUDA_CHECK(cudaStreamSynchronize(streams[i][1])); // Ensure the kernel has finished
-
-            // Launch the adjustKernel
-            adjustKernel<<<num_blocks_adjust[i], BLOCK_SIZE, 0, streams[i][0]>>>(d_i1_data_a2s[i], d_i2_data_a2s[i], d_vc_data_a2s[i], d_i1_mean_avg[i], d_i2_mean_avg[i], d_vc_mean_avg[i], d_i1_mean_a2s[i], d_i2_mean_a2s[i], d_vc_mean_a2s[i]);
-            CUDA_CHECK(cudaEventRecord(stopEvent[i][4], streams[i][0]));
-            // CUDA_CHECK(cudaStreamSynchronize(streams[i])); // Ensure the kernel has finished
-
-            // Launch the thermalKernel
-            thermalKernel<<<num_blocks_thermal[i], BLOCK_SIZE, 0, streams[i][1]>>>(d_i1_data_a2s[i], d_i2_data_a2s[i], d_vc_data_a2s[i], d_thermal_loss[i]);
-            CUDA_CHECK(cudaEventRecord(stopEvent[i][5], streams[i][1]));
-            // CUDA_CHECK(cudaStreamSynchronize(streams[i])); // Ensure the kernel has finished
-
-            // Copy thermal loss results back to host
-            CUDA_CHECK(cudaMemcpyAsync(&thermal_loss[index], d_thermal_loss[i], sizeof(double) * local_simulation_case_num[i], cudaMemcpyDeviceToHost, streams[i][0]));
-
-            // Record elapsed times for each kernel
-            for (int j = 0; j < 6; ++j) {
-                CUDA_CHECK(cudaStreamSynchronize(streams[i][j % 2])); // Synchronize the appropriate stream
-                CUDA_CHECK(cudaEventElapsedTime(&times[i][j], j == 0 ? startEvent[i] : stopEvent[i][j - 1], stopEvent[i][j]));
-            }
-
-            // Output the elapsed times for each kernel
-            std::cout << "GPU " << i << " AVG Model: " << times[i][0] * 0.001 << " seconds" << std::endl;
-            std::cout << "GPU " << i << " AVG Sum Model: " << times[i][1] * 0.001 << " seconds" << std::endl;
-            std::cout << "GPU " << i << " A2S Model: " << times[i][2] * 0.001 << " seconds" << std::endl;
-            std::cout << "GPU " << i << " A2S Sum Model: " << times[i][3] * 0.001 << " seconds" << std::endl;
-            std::cout << "GPU " << i << " Adjust Model: " << times[i][4] * 0.001 << " seconds" << std::endl;
-            std::cout << "GPU " << i << " Thermal Model: " << times[i][5] * 0.001 << " seconds" << std::endl;
-
-                        
-            for(int k=0; k<10; ++k){
-                std::cout << thermal_loss[k] << std::endl;
-            }
-
-            // Free device memory
-            CUDA_CHECK(cudaFree(d_i1_data_a2s[i]));
-            CUDA_CHECK(cudaFree(d_i2_data_a2s[i]));
-            CUDA_CHECK(cudaFree(d_vc_data_a2s[i]));
-            CUDA_CHECK(cudaFree(d_i1_data_avg[i]));
-            CUDA_CHECK(cudaFree(d_i2_data_avg[i]));
-            CUDA_CHECK(cudaFree(d_vc_data_avg[i]));
-            CUDA_CHECK(cudaFree(d_i1_mean_avg[i]));
-            CUDA_CHECK(cudaFree(d_i2_mean_avg[i]));
-            CUDA_CHECK(cudaFree(d_vc_mean_avg[i]));
-            CUDA_CHECK(cudaFree(d_i1_mean_a2s[i]));
-            CUDA_CHECK(cudaFree(d_i2_mean_a2s[i]));
-            CUDA_CHECK(cudaFree(d_vc_mean_a2s[i]));
-
-            index += local_simulation_case_num[i];
-        } // Iterate GPU
-
-    } // While (Index < Simulation Case)
-
-    for (int i = 0; i < numGPUs; ++i) {
-        // Clean up events and streams
-        CUDA_CHECK(cudaStreamDestroy(streams[i][0]));
-        CUDA_CHECK(cudaStreamDestroy(streams[i][1]));
-        CUDA_CHECK(cudaEventDestroy(startEvent[i]));
+    while(index < batchSize){
+ 
+        // std::cout << "Copying No." << offset + index  << " cases to GPU " << i << std::endl;
+        CUDA_CHECK(cudaMemcpyAsync(d_S_rated, S_rated, sizeof(double) * local_simulation_case_num, cudaMemcpyHostToDevice, streams[0]));
         for (int j = 0; j < 6; ++j) {
-            CUDA_CHECK(cudaEventDestroy(stopEvent[i][j]));
+            CUDA_CHECK(cudaEventCreate(&stopEvent[j]));
         }
+
+        // Record the start event
+        CUDA_CHECK(cudaEventRecord(startEvent, streams[0]));
+
+        // Launch the avgKernel
+        avgKernel<<<num_blocks_avg, BLOCK_SIZE, 0, streams[0]>>>(d_S_rated, local_simulation_case_num, d_i1_data_avg, d_i2_data_avg, d_vc_data_avg);
+        CUDA_CHECK(cudaEventRecord(stopEvent[0], streams[0]));
+
+        
+        // Launch the sumKernel for average model
+        sumKernel<<<num_blocks_mean, BLOCK_SIZE, 0, streams[0]>>>(d_i1_data_avg, d_i2_data_avg, d_vc_data_avg, local_simulation_case, d_i1_mean_avg, d_i2_mean_avg, d_vc_mean_avg);
+        CUDA_CHECK(cudaEventRecord(stopEvent[1], streams[0]));
+
+        // Launch the a2sKernel
+        a2sKernel<<<num_blocks_a2s, BLOCK_SIZE, 0, streams[0]>>>(d_i1_data_avg, d_i2_data_avg, d_vc_data_avg, local_simulation_case_num, d_i1_data_a2s, d_i2_data_a2s, d_vc_data_a2s);
+        CUDA_CHECK(cudaEventRecord(stopEvent[2], streams[0]));
+
+        // Launch the sumKernel for A2S model
+        sumKernel<<<num_blocks_mean, BLOCK_SIZE, 0, streams[0]>>>(d_i1_data_a2s, d_i2_data_a2s, d_vc_data_a2s, local_simulation_case, d_i1_mean_a2s, d_i2_mean_a2s, d_vc_mean_a2s);
+        CUDA_CHECK(cudaEventRecord(stopEvent[3], streams[0]));
+
+        // Launch the adjustKernel
+        adjustKernel<<<num_blocks_adjust, BLOCK_SIZE, 0, streams[0]>>>(d_i1_data_a2s, d_i2_data_a2s, d_vc_data_a2s, d_i1_mean_avg, d_i2_mean_avg, d_vc_mean_avg, d_i1_mean_a2s, d_i2_mean_a2s, d_vc_mean_a2s);
+        CUDA_CHECK(cudaEventRecord(stopEvent[4], streams[0]));
+
+        // Launch the thermalKernel
+        thermalKernel<<<num_blocks_thermal, BLOCK_SIZE, 0, streams[0]>>>(d_i1_data_a2s, d_i2_data_a2s, d_vc_data_a2s, d_thermal_loss);
+        CUDA_CHECK(cudaEventRecord(stopEvent[5], streams[0]));
+
+        // Copy thermal loss results back to host
+        CUDA_CHECK(cudaMemcpyAsync(thermal_loss, d_thermal_loss, sizeof(double) * local_simulation_case_num, cudaMemcpyDeviceToHost, streams[0]));
+        
+        // Record elapsed times for each kernel
+        /*
+        for (int j = 0; j < 6; ++j) {
+            CUDA_CHECK(cudaStreamSynchronize(streams[j % 2])); // Synchronize the appropriate stream
+            CUDA_CHECK(cudaEventElapsedTime(&times[j], j == 0 ? startEvent : stopEvent[j - 1], stopEvent[j]));
+        }
+
+        // Output the elapsed times for each kernel
+        std::cout << "GPU " << i << " AVG Model: " << times[0] * 0.001 << " seconds" << std::endl;
+        std::cout << "GPU " << i << " AVG Sum Model: " << times[1] * 0.001 << " seconds" << std::endl;
+        std::cout << "GPU " << i << " A2S Model: " << times[2] * 0.001 << " seconds" << std::endl;
+        std::cout << "GPU " << i << " A2S Sum Model: " << times[3] * 0.001 << " seconds" << std::endl;
+        std::cout << "GPU " << i << " Adjust Model: " << times[4] * 0.001 << " seconds" << std::endl;
+        std::cout << "GPU " << i << " Thermal Model: " << times[5] * 0.001 << " seconds" << std::endl;
+        
+        for(int k=0; k<10; ++k){
+            std::cout << thermal_loss[k] << std::endl;
+        }
+        */
+
+        index += local_simulation_case_num;
+
+    } // While (index < batchSize)
+
+    // Free device memory
+    CUDA_CHECK(cudaFree(d_i1_data_avg));
+    CUDA_CHECK(cudaFree(d_i2_data_avg));
+    CUDA_CHECK(cudaFree(d_vc_data_avg));
+
+    CUDA_CHECK(cudaFree(d_i1_mean_avg));
+    CUDA_CHECK(cudaFree(d_i2_mean_avg));
+    CUDA_CHECK(cudaFree(d_vc_mean_avg));
+
+    CUDA_CHECK(cudaFree(d_i1_data_a2s));
+    CUDA_CHECK(cudaFree(d_i2_data_a2s));
+    CUDA_CHECK(cudaFree(d_vc_data_a2s));
+
+    CUDA_CHECK(cudaFree(d_i1_mean_a2s));
+    CUDA_CHECK(cudaFree(d_i2_mean_a2s));
+    CUDA_CHECK(cudaFree(d_vc_mean_a2s));
+
+    // Clean up events and streams
+    CUDA_CHECK(cudaStreamDestroy(streams[0]));
+    CUDA_CHECK(cudaStreamDestroy(streams[1]));
+    CUDA_CHECK(cudaEventDestroy(startEvent));
+    for (int j = 0; j < 6; ++j) {
+        CUDA_CHECK(cudaEventDestroy(stopEvent[j]));
     }
+
+    MPI_Barrier(comm);
 
 } // Function End
